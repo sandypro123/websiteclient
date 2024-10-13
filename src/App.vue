@@ -2,31 +2,33 @@
  * @Descripttion: 
  * @Author: Sandy
  * @Date: 2024-10-08 22:22:48
- * @LastEditTime: 2024-10-10 21:24:08
+ * @LastEditTime: 2024-10-13 21:03:47
 -->
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <router-view/>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+}
+// 解决ERROR ResizeObserver loop completed with undelivered notifications.
+// 重写ResizeObserver的构造函数，并在其中定义并调用防抖函数
+window.ResizeObserver = class ResizeObserver extends window.ResizeObserver {
+  constructor(callback) {
+    let timer = null;
+    const debouncedCallback = function () {
+      let context = this;
+      let args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        callback.apply(context, args);
+      }, 16);
+    };
+    super(debouncedCallback);
   }
-}
-</script>
+};
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+</script>
