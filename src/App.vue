@@ -2,7 +2,7 @@
  * @Descripttion: 
  * @Author: Sandy
  * @Date: 2024-10-08 22:22:48
- * @LastEditTime: 2024-10-13 21:03:47
+ * @LastEditTime: 2024-11-17 08:24:18
 -->
 <template>
   <div id="app">
@@ -32,3 +32,19 @@ window.ResizeObserver = class ResizeObserver extends window.ResizeObserver {
 };
 
 </script>
+
+<style>
+* { margin: 0; padding: 0; }
+
+body {
+	background-color: #f5f5f5;
+	font-weight: 400;
+	font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+	line-height: 1.5;
+}
+
+html{height:100%;}
+body{min-height:100%;}
+body{position:relative;}
+
+</style>

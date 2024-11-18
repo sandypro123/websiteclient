@@ -2,43 +2,70 @@
  * @Descripttion: 页面头部组件
  * @Author: Sandy
  * @Date: 2024-10-13 09:43:19
- * @LastEditTime: 2024-10-13 16:34:23
+ * @LastEditTime: 2024-11-18 21:14:58
 -->
 <template>
     <div class="header">
         <div id="header_pic">
-            <img style="width: 60px;" src="@/assets/logo.png"/>
+            <img style="width: 40px;" src="@/assets/logo.png"/>
         </div>
-        <el-menu id="header-el-menu" mode="horizontal" border-bottom: none :default-active="activeIndex"  @select="handleSelect">
-            <el-menu-item index="1">"主页"</el-menu-item>
-            <el-menu-item index="2">"聚合新闻"</el-menu-item>
-            <el-menu-item index="3">"每日精选"</el-menu-item>
-            <el-menu-item index="4">"关于"</el-menu-item>
+        <el-menu class="header-el-menu" mode="horizontal" border-bottom="none" :default-active="activeIndex"  @select="handleSelect">
+            <el-menu-item index="1">主页</el-menu-item>
+            <el-menu-item index="2">聚合新闻</el-menu-item>
+            <el-menu-item index="3">每日精选</el-menu-item>
+            <el-menu-item index="4">关于</el-menu-item>
         </el-menu>
     </div>
 </template>
 <script>
 export default {
-    name:"BaseHeader"
-}
+  data() {
+    return {
+      activeIndex: '1'
+    };
+  },
+  methods: {
+    handleSelect(key) {
+      switch (key) {
+        case '1':
+          this.$router.push('/');
+          break;
+        case '2':
+          this.$router.push('/topSearchNews');
+          break;
+        case '3':
+          this.$router.push('/cnBlogNews');
+          break;
+        case '4':
+          this.$router.push('/aboutMe');
+          break;
+      }
+    }
+  },
+  watch: {
+      '$route'(to) {
+        if (to.path === '/') {
+          this.activeIndex = '1';
+        } else if (to.path === '/topSearchNews') {
+          this.activeIndex = '2';
+        } else if (to.path === '/cnBlogNews') {
+          this.activeIndex = '3';
+        } else if (to.path === '/aboutMe') {
+          this.activeIndex = '4';
+        }
+      }
+    }
+};
 </script>
 <style scoped>
 .header {
-    width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
-    position: fixed;
 }
+.header-el-menu{
+    background-color: #f5f5f5;
+}
+.header_pic{
 
-@media (min-width: 992px){
-    .header-el-menu{
-        width: 30%;
-    }
 }
-@media (max-width: 992px){
-    .header-el-menu{
-        width: 60%;
-    }
-} 
 </style>

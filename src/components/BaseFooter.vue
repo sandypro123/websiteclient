@@ -2,10 +2,10 @@
  * @Descripttion: 页面尾部组件
  * @Author: Sandy
  * @Date: 2024-10-13 10:05:59
- * @LastEditTime: 2024-10-13 21:00:34
+ * @LastEditTime: 2024-11-14 09:01:29
 -->
 <template>
-    <div class="footer">
+    <div class="Basefooter">
         <el-space direction="vertical">
             <el-text class="footer-text" type="info">&copy; {{new Date().getFullYear()}} My Company.All rights reserved</el-text>
         </el-space>
@@ -19,13 +19,11 @@ export default {
 </script>
 
 <style scoped>
-.footer{
-    background-color: antiquewhite;
-    width: 100%;
-    height: 100%;
+.Basefooter{
     display: flex;
+    height: 100%;
     justify-content: center;
-    padding:0 20px;
-    position: fixed; 
+    align-items: center;
 }
+
 </style>

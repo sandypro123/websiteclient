@@ -1,18 +1,20 @@
 <!--
- * @Descripttion: 首页展示
  * @Author: Sandy
- * @Date: 2024-10-13 09:58:49
- * @LastEditTime: 2024-10-13 21:01:24
+ * @Date: 2024-10-13 06:30:44
+ * @LastEditors: Sandy
+ * @LastEditTime: 2024-11-14 10:02:24
+ * @Description: 
 -->
+
 <template>
     <el-container>
-        <el-header :style="{padding: '0px'}"> 
+        <el-header > 
             <BaseHeader/>
         </el-header>
-        <el-main :style="{padding: '0px'}">
+        <el-main>
             <router-view/>
         </el-main>
-        <el-footer :style="{padding: '0px'}">
+        <el-footer >
             <BaseFooter/>
         </el-footer>
     </el-container>
@@ -32,19 +34,12 @@ export default {
 
 <style>
  .el-header{
+    height: 60px; /* 设置固定高度 */
     border-bottom: 1px solid #dcdfe6;
+    
 }
 .el-main{
-    background-color: white;
+    min-height: calc(100vh - 140px);
+    width: 100%;
 }
-html,body{
-    height: 100%;
-    margin: 0;
-}
-#app{
-    height: 100%;
-}
-.el-container{
-    height: 100%;
-} 
 </style>

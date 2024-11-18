@@ -2,7 +2,7 @@
  * @Descripttion: 路由管理
  * @Author: Sandy
  * @Date: 2024-10-13 08:51:52
- * @LastEditTime: 2024-10-13 21:05:35
+ * @LastEditTime: 2024-11-17 08:17:14
  */
 
 import {createRouter,createWebHistory} from 'vue-router'
@@ -17,7 +17,19 @@ const routes=[
             {
                 path:'/',
                 component:()=>import('@/views/WelcomePage.vue')
-            }
+            },
+            {
+                path:'/topSearchNews',
+                component:()=>import('@/views/common/TopSearchNews.vue')
+            },
+            {
+                path:'/cnBlogNews',
+                component:()=>import('@/views/common/CnblogNews.vue')
+            },
+            {
+                path:'/aboutMe',
+                component:()=>import('@/views/common/AboutMe.vue')
+            },
         ]
     }
 ]
