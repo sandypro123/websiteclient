@@ -1,11 +1,6 @@
-<!--
- * @Descripttion: 
- * @Author: Sandy
- * @Date: 2024-11-14 21:53:00
- * @LastEditTime: 2024-11-18 20:54:18
--->
 <template>
     <div class="welcome-page-container">
+        <!-- 背景动画 -->
         <vue-particles
             class="login-background"
             color="#97D0F2"
@@ -24,50 +19,64 @@
             :clickEffect="true"
             clickMode="push">
         </vue-particles>
+
+        <!-- 内容部分 -->
         <div class="content">
-            <el-row>
-                <el-col :span="12">
-                    <div class="grid-content text">
-                        <el-space direction="vertical">
-                            <el-text class="mx-1" type="warning">Sandy</el-text>
-                            <el-text class="mx-2" type="warning">A Java Developer</el-text>
-                            <el-text class="mx-3" type="warning">A Java Developer</el-text>
-                        </el-space>
-                    </div>
-                </el-col>
-                <el-col :span="12" v-for="(image, index) in images" :key="index">
-                    <div class="grid-content img">
-                        <img class="image" :src="image.src" :alt="image.alt">
-                    </div>
-                </el-col>
-            </el-row>
+            <div class="text-section">
+                <h1 class="main-title">Welcome to my website</h1>
+                <p class="sub-title">A passionate Java Developer</p>
+                <p class="description">Explore projects, news, and more!</p>
+            </div>
+            
+            <!-- 图片轮播 -->
+            <el-carousel
+                class="carousel"
+                :interval="3000"
+                type="card"
+                height="300px"
+                arrow="always"
+                autoplay
+            >
+                <el-carousel-item
+                    v-for="(image, index) in images"
+                    :key="index"
+                >
+                    <img class="carousel-image" :src="image.src" :alt="image.alt" />
+                </el-carousel-item>
+            </el-carousel>
         </div>
     </div>
 </template>
 
 <script>
-import img1 from '@/assets/Scenery/Scenery-3.jpg'
-//import img1 from '@/assets/logo.png'
+import img1 from "@/assets/Scenery/Scenery-1.jpg";
+import img2 from "@/assets/Scenery/Scenery-2.jpg";
+import img3 from "@/assets/Scenery/Scenery-3.jpg";
+
 export default {
     data() {
         return {
             images: [
-                { src: img1, alt: "Image 1", title: "Title 1" },
-                { src: img1, alt: "Image 2", title: "Title 2" },
-                { src: img1, alt: "Image 1", title: "Title 3" }
-            ]
-        }
-    }
-}
+                { src: img1, alt: "Beautiful Scenery 1" },
+                { src: img2, alt: "Beautiful Scenery 2" },
+                { src: img3, alt: "Beautiful Scenery 3" },
+                { src: img1, alt: "Beautiful Scenery 4" },
+            ],
+        };
+    },
+};
 </script>
 
 <style scoped>
+/* 全局容器 */
 .welcome-page-container {
     position: relative;
     width: 100%;
+    height: 100vh;
     text-align: center;
 }
 
+/* 背景动画 */
 .login-background {
     position: absolute;
     top: 0;
@@ -77,38 +86,50 @@ export default {
     z-index: -1;
 }
 
+/* 内容区 */
 .content {
     position: relative;
     z-index: 1;
-    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); */
 }
 
-.grid-content {
-    text-align: center;
+/* 文本部分 */
+.text-section {
+    margin-bottom: 30px;
 }
 
-.text {
-    margin-bottom: 20px;
+.main-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #e74c3c;
 }
-.grid-content.img {
-    margin: 0px 10px; /* 上下间距为20px，左右间距为5px */
+
+.sub-title {
+    font-size: 24px;
+    color: #555;
+    margin: 10px 0;
 }
-.mx-1{
-    font-family: "Roboto", sans-serif;
-    font-size: 48px; /* 大标题 */
-    font-weight: 700; /* 加粗 */
-    color: #e74c3c; /* 红色 */
-}
-.mx-2{
-    font-family: "Roboto", sans-serif;
-    font-size: 24px; /* 副标题 */
-    font-weight: 400;
-    color: #333;
-}
-.mx-3{
-    font-family: "Roboto", sans-serif;
-    font-size: 16px; /* 正文字体 */
+
+.description {
+    font-size: 16px;
     color: #777;
     line-height: 1.5;
+}
+
+/* 轮播图片 */
+.carousel {
+    margin-top: 20px;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
 }
 </style>
