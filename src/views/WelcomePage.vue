@@ -52,7 +52,7 @@
 import img1 from "@/assets/Scenery/Scenery-1.jpg";
 import img2 from "@/assets/Scenery/Scenery-2.jpg";
 import img3 from "@/assets/Scenery/Scenery-3.jpg";
-
+import img4 from "@/assets/Scenery/Scenery-4.jpg";
 export default {
     data() {
         return {
@@ -60,7 +60,7 @@ export default {
                 { src: img1, alt: "Beautiful Scenery 1" },
                 { src: img2, alt: "Beautiful Scenery 2" },
                 { src: img3, alt: "Beautiful Scenery 3" },
-                { src: img1, alt: "Beautiful Scenery 4" },
+                { src: img4, alt: "Beautiful Scenery 4" },
             ],
         };
     },

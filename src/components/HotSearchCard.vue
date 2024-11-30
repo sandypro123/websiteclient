@@ -1,6 +1,6 @@
 <template>
   <div class="hot-search-card">
-    <div class="left-bg">
+    <div class="left-bg" :style="leftBgStyle">
       <div class="card-image">
         <img :src="image" alt="热搜图片">
       </div>
@@ -16,7 +16,7 @@
         </li>
       </ul>
     </div>
-    <button class="more-button" @click="handleMoreClick">More</button>
+    <img src="@/assets/next-page.png" alt="More Button" class="more-button" @click="handleMoreClick" />
   </div>
 
 </template>
@@ -31,6 +31,10 @@ export default {
     },
     hotSearchItems: {
       type: Array,
+      required: true
+    },
+    backgroundColor: {
+      type: String,
       required: true
     }
   },
@@ -65,8 +69,12 @@ export default {
       const endIndex = startIndex + 10;
       return this.hotSearchItems.slice(startIndex, endIndex);
     },
-
-  },
+    leftBgStyle() {
+      return {
+        backgroundColor: this.backgroundColor
+      };
+    }
+  }
 }
 </script>
 
@@ -75,22 +83,36 @@ export default {
   display: flex;
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 2%;
+  border-radius: 10px;
   width: 100%;
+  height: 365px;
   /* 子组件宽度占满容器 */
   position: relative;
   /* 为绝对定位创建参考 */
-  
 }
-.left-bg{
+
+.left-bg {
   width: 30%;
   height: 100%;
+  border-top-left-radius: 10px;
+  /* 左上角圆角 */
+  border-bottom-left-radius: 10px;
+  /* 左下角圆角 */
+  display: flex;
+  /* 使用弹性布局 */
+  justify-content: center;
+  /* 水平居中 */
+  align-items: center;
+  /* 垂直居中 */
 }
 
 .card-image {
-  width: 30%;
-  /* 图片占据子组件宽度的40% */
-  height: 100%;
+  max-width: 90%;
+  /* 限制图片宽度 */
+  max-height: 90%;
+  /* 限制图片高度 */
+  object-fit: contain;
+  /* 确保图片完整显示 */
 }
 
 .card-image img {
@@ -126,28 +148,15 @@ export default {
   line-height: 2.0;
 }
 
-/* More按钮样式 */
 .more-button {
-  position: absolute;
-  /* 绝对定位 */
-  top: 10px;
-  /* 距离顶部10px */
-  right: 10px;
-  /* 距离右侧10px */
-  padding: 5px 10px;
-  /* 内边距 */
-  color: #007BFF;
-  /* 文字颜色 */
-  border: none;
-  /* 无边框 */
-  border-radius: 5px;
-  /* 圆角 */
-  cursor: pointer;
-  /* 鼠标光标变为指针 */
-  font-size: 14px;
-  /* 字体大小 */
+  position: absolute; /* 绝对定位 */
+  top: 10px; /* 距离容器顶部10px */
+  right: 10px; /* 距离容器右侧10px */
+  width: 30px; /* 图片宽度 */
+  height: 30px; /* 图片高度 */
+  cursor: pointer; /* 鼠标变成指针样式 */
+  object-fit: contain; /* 确保图片完整显示 */
 }
-
 .num-red {
   color: red;
 }
