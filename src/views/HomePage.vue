@@ -1,8 +1,8 @@
 <!--
  * @Author: Sandy
  * @Date: 2024-10-13 06:30:44
- * @LastEditors: Sandy
- * @LastEditTime: 2024-11-14 10:02:24
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2024-12-07 08:41:16
  * @Description: 
 -->
 
@@ -41,5 +41,21 @@ export default {
 .el-main{
     min-height: calc(100vh - 140px);
     width: 100%;
+}
+/* 定义动画 */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 应用动画到元素 */
+.el-main {
+  animation: fadeInDown 1s ease-out forwards;
 }
 </style>
