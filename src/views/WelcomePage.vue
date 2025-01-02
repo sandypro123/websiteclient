@@ -49,10 +49,10 @@
 </template>
 
 <script>
-import img1 from "@/assets/Scenery/Scenery-1.jpg";
-import img2 from "@/assets/Scenery/Scenery-2.jpg";
-import img3 from "@/assets/Scenery/Scenery-3.jpg";
-import img4 from "@/assets/Scenery/Scenery-4.jpg";
+import img1 from "@/assets/Scenery/Scenery-1.webp";
+import img2 from "@/assets/Scenery/Scenery-2.webp";
+import img3 from "@/assets/Scenery/Scenery-3.webp";
+import img4 from "@/assets/Scenery/Scenery-4.webp";
 export default {
     data() {
         return {
@@ -72,7 +72,7 @@ export default {
 .welcome-page-container {
     position: relative;
     width: 100%;
-    height: 100vh;
+    /* height: 100vh; */
     text-align: center;
 }
 

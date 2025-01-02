@@ -25,10 +25,10 @@
 import { ElRow, ElCol } from 'element-plus';
 import HotSearchCard from '@/components/HotSearchCard.vue';
 import { getTopSearchNews } from '@/api/GetArticle';
-import pic1 from '@/assets/Logo/weibo.png';
-import pic2 from '@/assets/Logo/zhihu.png';
-import pic3 from '@/assets/Logo/douban.png';
-import pic4 from '@/assets/Logo/shaoshupai.png';
+import pic1 from '@/assets/Logo/weibo.webp';
+import pic2 from '@/assets/Logo/zhihu.webp';
+import pic3 from '@/assets/Logo/douban.webp';
+import pic4 from '@/assets/Logo/shaoshupai.webp';
 
 export default {
   name: 'HomePage',
