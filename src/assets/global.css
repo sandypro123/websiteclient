@@ -1,4 +1,3 @@
-
 /* 基础变量设置 */
 :root {
     --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, 
@@ -52,21 +51,3 @@
     color: inherit;
     text-decoration: none;
   }
-/* 去除el-header组件的自带边距 */
-.el-header {
-    margin: 0;
-    padding: 0;
-}
-
-/* 去除el-container组件的自带边距 */
-.el-container {
-    margin: 0;
-    padding: 0;
-    min-width: 800px;
-}
-
-/* 去除el-footer组件的自带边距 */
-.el-footer {
-    margin: 0;
-    padding: 0;
-}

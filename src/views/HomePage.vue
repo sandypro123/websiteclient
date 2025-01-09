@@ -2,17 +2,22 @@
  * @Author: Sandy
  * @Date: 2024-10-13 06:30:44
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2024-12-07 08:41:16
+ * @LastEditTime: 2025-01-09 20:39:50
  * @Description: 
 -->
 
 <template>
-    <el-container>
+    <el-container class="layout-container">
         <el-header > 
             <BaseHeader/>
         </el-header>
         <el-main>
-            <router-view/>
+            <LoadingSpinner v-if="isLoading" />
+            <router-view v-else v-slot="{ Component }">
+                <transition name="fade" mode="out-in">
+                    <component :is="Component" />
+                </transition>
+            </router-view>
         </el-main>
         <el-footer >
             <BaseFooter/>
@@ -20,16 +25,28 @@
     </el-container>
 </template>
 
-<script>
- import BaseHeader from "@/components/BaseHeader.vue";
- import BaseFooter from "@/components/BaseFooter.vue";
-export default {
-    name:"HomePage",
-    components:{
-        BaseHeader,
-        BaseFooter
-    }
-}
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import BaseHeader from "@/components/BaseHeader.vue";
+import BaseFooter from "@/components/BaseFooter.vue";
+import LoadingSpinner from '@/components/LoadingSpinner.vue'
+
+const isLoading = ref(false)
+const router = useRouter()
+
+// 路由守卫控制加载状态
+router.beforeEach((to, from, next) => {
+  isLoading.value = true
+  next()
+})
+
+router.afterEach(() => {
+  // 模拟异步加载完成
+  setTimeout(() => {
+    isLoading.value = false
+  }, 500)
+})
 </script>
 
 <style>

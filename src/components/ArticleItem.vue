@@ -2,87 +2,118 @@
  * @Author: Sandy
  * @Date: 2024-12-03 13:25:45
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2024-12-07 08:37:36
+ * @LastEditTime: 2025-01-08 20:27:37
  * @Description: 
 -->
 <template>
-  <el-card class="me-area" :body-style="{ padding: '16px' }">
-    <div class="me-article-header">
-      <a @click="view(url)" class="me-article-title">{{ title }}</a>
+  <el-card class="article-card" :body-style="{ padding: '16px' }">
+    <div class="article-header">
+      <a @click="view(url)" class="article-title">{{ title }}</a>
     </div>
 
-    <div class="me-article-description">
-      <!-- 根据isFullContent的值显示截取的内容或全文 -->
-      <div v-html="isFullContent ? displayContent : truncatedContent"></div>
+    <div class="article-description">
+      <div v-html="processedContent"></div>
     </div>
-    <div class="me-article-toggle" v-if="!isFullContent">
-      <el-button link @click="toggleContent">查看全文</el-button>
-    </div>
-    <div class="me-article-toggle" v-else>
-      <el-button link @click="toggleContent">收起</el-button>
+    <div class="article-toggle" v-if="hasLongContent">
+      <el-button link @click="toggleContent">
+        {{ isFullContent ? '收起' : '查看全文' }}
+      </el-button>
     </div>
   </el-card>
 </template>
 
 <script>
 import showdown from 'showdown';
+
 export default {
   name: 'ArticleItem',
   props: {
     id: Number,
     url: String,
     title: String,
-    content: String,
+    content: {
+      type: String,
+      required: true
+    },
     date: String
   },
   data() {
     return {
-      isFullContent: false, // 控制是否显示全文
-      showdownConverter: new showdown.Converter()
+      isFullContent: false,
+      showdownConverter: new showdown.Converter({
+        simplifiedAutoLink: true,
+        excludeTrailingPunctuationFromURLs: true
+      })
     };
   },
   computed: {
-    displayContent() {
-      // 如果isFullContent为true，则显示全文，并解析Markdown
-      let html = this.showdownConverter.makeHtml(this.content);
-      // 替换换行符为 <br>
-      html = html.replace(/\n/g, '<br>');
-      // 处理图片大小，限制最大宽度为30%，高度自动
-      html = html.replace(/<img(.*?)src="(.*?)"(.*?)>/g, function (match, p1, p2, p3) {
-        return `<img${p1}src="${p2}" style="max-width: 30%; height: auto;"${p3}>`;
-      });
-      // 移除SVG元素
-      html = html.replace(/!\[\](data:image\/svg\+xml;utf8,<svg[^>]*>.*?<\/svg>)/g, '');
-      html = html.replace(/<svg[^>]*>.*?<\/svg>/gi, '');
-      return html;
+    hasLongContent() {
+      return this.content.length > 50;
     },
-    truncatedContent() {
-      if (this.content.length > 50) {
-        // 使用DOMParser进行安全的HTML截取
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(this.content.substring(0, 50) + '...', 'text/html');
-        return this.showdownConverter.makeHtml(doc.body.textContent || doc.body.innerText || '');
-      }
-      return this.content;
+    processedContent() {
+      const content = this.isFullContent ? this.content : this.getTruncatedContent();
+      return this.formatContent(content);
     }
   },
   methods: {
+    formatContent(text) {
+      let html = this.showdownConverter.makeHtml(text);
+      return this.processHTML(html);
+    },
+    processHTML(html) {
+      // 处理HTML的辅助方法
+      return html
+        .replace(/\n/g, '<br>')
+        .replace(/<img(.*?)src="(.*?)"(.*?)>/g, 
+          (_, p1, p2, p3) => `<img${p1}src="${p2}" class="article-image"${p3}>`)
+        .replace(/!\[\](data:image\/svg\+xml;utf8,<svg[^>]*>.*?<\/svg>)/g, '')
+        .replace(/<svg[^>]*>.*?<\/svg>/gi, '');
+    },
+    getTruncatedContent() {
+      if (!this.hasLongContent) return this.content;
+      
+      const truncated = this.content.substring(0, 50);
+      return `${truncated}...`;
+    },
     view(url) {
-      window.open(url);
+      if (!url) return;
+      window.open(url, '_blank', 'noopener noreferrer');
     },
     toggleContent() {
       this.isFullContent = !this.isFullContent; // 切换isFullContent状态
     }
-  },
+  }
 }
 </script>
 
-<style scoped>
-.me-article-header {
+<style>
+.article-card {
+  transition: box-shadow 0.3s ease;
+}
+
+.article-card:hover {
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+}
+
+.article-description {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 12px 0;
+  color: #333;
+}
+
+.article-image {
+  max-width: 30%;
+  height: auto;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+.article-header {
   padding-bottom: 10px;
 }
 
-.me-article-title {
+.article-title {
   font-weight: 600;
   color: black;
   text-decoration: none;
@@ -90,13 +121,7 @@ export default {
   transition: color 0.3s ease;
 }
 
-.me-article-title:hover {
+.article-title:hover {
   color: #00008B;
-}
-
-.me-article-description {
-  font-size: 13px;
-  line-height: 24px;
-  margin-bottom: 10px;
 }
 </style>

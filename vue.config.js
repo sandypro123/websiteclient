@@ -20,6 +20,15 @@ module.exports = defineConfig({
     port: 8081,
     client: {
       overlay: false
+    },
+    proxy: {
+      '/api': {
+        target: process.env.VUE_APP_BASE_API,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
     }
   }
 })
