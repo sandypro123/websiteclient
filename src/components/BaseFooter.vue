@@ -2,7 +2,7 @@
  * @Descripttion: 页面尾部组件
  * @Author: Sandy
  * @Date: 2024-10-13 10:05:59
- * @LastEditTime: 2024-11-14 09:01:29
+ * @LastEditTime: 2025-01-10 21:16:57
 -->
 <template>
     <div class="Basefooter">

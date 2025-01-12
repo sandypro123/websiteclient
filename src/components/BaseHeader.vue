@@ -56,19 +56,7 @@ export default {
             }
         },
     },
-    // watch: {
-    //     $route(to) {
-    //         if (to.path === "/") {
-    //             this.activeIndex = "1";
-    //         } else if (to.path === "/topSearchNews") {
-    //             this.activeIndex = "2";
-    //         } else if (to.path === "/cnBlogNews") {
-    //             this.activeIndex = "3";
-    //         } else if (to.path === "/aboutMe") {
-    //             this.activeIndex = "4";
-    //         }
-    //     }
-    // },
+
 };
 </script>
 
