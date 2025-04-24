@@ -2,7 +2,7 @@
  * @Descripttion: 
  * @Author: Sandy
  * @Date: 2024-11-17 08:08:10
- * @LastEditTime: 2025-01-09 20:05:04
+ * @LastEditTime: 2025-04-24 08:34:05
  */
 /*
  * @Descripttion: 
@@ -26,6 +26,25 @@ export function getCnBlogNews(page,size){
     params:{
       page:page,
       size:size
+    }
+  })
+}
+export function getNews(page,size){
+  return request({
+    url: '/api/news/getAllNews',
+    method:'get',
+    params:{
+      page:page,
+      size:size
+    }
+  })
+}
+export function getNewsDetail(link) {
+  return request({
+    url: '/api/news/getNewsDetail',
+    method: 'get',
+    params: {
+      link: link 
     }
   })
 }

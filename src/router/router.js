@@ -2,7 +2,7 @@
  * @Descripttion: 路由管理
  * @Author: Sandy
  * @Date: 2024-10-13 08:51:52
- * @LastEditTime: 2024-11-17 08:17:14
+ * @LastEditTime: 2025-04-24 08:35:53
  */
 
 import {createRouter,createWebHistory} from 'vue-router'
@@ -30,6 +30,15 @@ const routes=[
                 path:'/aboutMe',
                 component:()=>import('@/views/common/AboutMe.vue')
             },
+            {
+                path:'/newsItem',
+                component:()=>import('@/views/common/NewsItem.vue')
+            },
+            {
+                path: '/news/:id',
+                name: 'newsDetail',
+                component: () => import('@/views/common/NewsDetail.vue')
+            }
         ]
     }
 ]

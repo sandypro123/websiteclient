@@ -2,7 +2,7 @@
  * @Descripttion: 
  * @Author: Sandy
  * @Date: 2024-11-19 17:51:47
- * @LastEditTime: 2025-01-01 10:06:17
+ * @LastEditTime: 2025-04-24 08:44:03
 -->
 <template>
     <div class="header">
@@ -13,8 +13,9 @@
             @select="handleSelect">
             <el-menu-item index="1">主页</el-menu-item>
             <el-menu-item index="2">焦点</el-menu-item>
-            <el-menu-item index="3">拾贝</el-menu-item>
-            <el-menu-item index="4">关于</el-menu-item>
+            <el-menu-item index="3">文章</el-menu-item>
+            <el-menu-item index="4">问答</el-menu-item>
+            <el-menu-item index="5">关于</el-menu-item>
         </el-menu>
     </div>
 </template>
@@ -32,10 +33,12 @@ export default {
             this.activeIndex = "1";
         } else if (route.path === "/topSearchNews") {
             this.activeIndex = "2";
-        } else if (route.path === "/cnBlogNews") {
+        } else if (route.path === "/newsItem") {
             this.activeIndex = "3";
-        } else if (route.path === "/aboutMe") {
+        } else if (route.path === "/cnBlogNews") {
             this.activeIndex = "4";
+        } else if (route.path === "/aboutMe") {
+            this.activeIndex = "5";
         }
     },
     methods: {
@@ -48,27 +51,18 @@ export default {
                     this.$router.push("/topSearchNews");
                     break;
                 case "3":
+                    this.$router.push("/newsItem");
+                break;
+                case "4":
                     this.$router.push("/cnBlogNews");
                     break;
-                case "4":
+                case "5":
                     this.$router.push("/aboutMe");
                     break;
             }
         },
     },
-    // watch: {
-    //     $route(to) {
-    //         if (to.path === "/") {
-    //             this.activeIndex = "1";
-    //         } else if (to.path === "/topSearchNews") {
-    //             this.activeIndex = "2";
-    //         } else if (to.path === "/cnBlogNews") {
-    //             this.activeIndex = "3";
-    //         } else if (to.path === "/aboutMe") {
-    //             this.activeIndex = "4";
-    //         }
-    //     }
-    // },
+
 };
 </script>
 
