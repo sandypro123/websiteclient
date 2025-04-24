@@ -2,12 +2,12 @@
  * @Descripttion: 
  * @Author: Sandy
  * @Date: 2024-11-17 08:17:45
- * @LastEditTime: 2025-01-09 21:14:16
+ * @LastEditTime: 2025-01-12 21:40:28
 -->
 <template>
   <div class="about-container">
     <!-- 头部区域 -->
-    <div class="header">
+    <div class="header" :class="{ 'fade-in': isLoaded }">
       <div class="name-section">
         <h1>{{ profile.firstName }} <span>{{ profile.lastName }}</span></h1>
       </div>
@@ -15,14 +15,14 @@
     </div>
 
     <!-- 个人简介 -->
-    <div class="section">
+    <div class="section" :class="{ 'fade-in': isLoaded }">
       <h2>PROFILE</h2>
       <div class="divider"></div>
       <p>{{ profile.description }}</p>
     </div>
 
     <!-- 工作经验 -->
-    <div class="section">
+    <div class="section" :class="{ 'fade-in': isLoaded }">
       <h2>EXPERIENCE</h2>
       <div class="divider"></div>
       <div v-for="(job, index) in experience" :key="index" class="experience-item">
@@ -48,7 +48,7 @@
     </div>
 
     <!-- 联系方式 -->
-    <div class="contact-info">
+    <div class="contact-info" :class="{ 'fade-in': isLoaded }">
       <div class="contact-item">
         <el-icon><Phone /></el-icon>
         <span>{{ profile.phone }}</span>
@@ -68,7 +68,7 @@
     </div>
 
     <!-- 技能部分 -->
-    <div class="section">
+    <div class="section" :class="{ 'fade-in': isLoaded }">
       <h2>SKILLS</h2>
       <div class="divider"></div>
       <div class="skills-container">
@@ -82,13 +82,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted ,defineEmits} from 'vue'
 import { Location, Phone, Message, Link } from '@element-plus/icons-vue'
+import logoImage from '@/assets/logo.png'
+
+// 添加 emit 定义
+const emit = defineEmits(['data-loaded'])
 
 const profile = ref({
   firstName: 'INÊS',
   lastName: 'ALMEIDA',
-  avatar: '/path/to/avatar.jpg',
+  avatar: logoImage,
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
   phone: '+44 123 456 789',
   email: 'contact@ines-almeida.com',
@@ -117,6 +121,20 @@ const skillsets = ref({
   'Frameworks': ['Django', 'Flask', 'Hugo', 'React'],
   'Developer Tools': ['Git', 'Docker', 'Jenkins', 'AWS'],
   'Misc': ['Adobe Tools', 'LaTeX']
+})
+
+// 添加加载状态
+const isLoaded = ref(false)
+
+onMounted(() => {
+  // 简化加载逻辑，移除不必要的 Promise.all
+  // 因为 ref 数据已经在setup时初始化
+  requestAnimationFrame(() => {
+    console.log('AboutMe isLoaded')
+    isLoaded.value = true
+    // 确保发出事件
+    emit('data-loaded')
+  })
 })
 </script>
 
@@ -214,4 +232,23 @@ h2 {
     color: #999;
   }
 }
+
+/* 添加动画相关样式 */
+.header,
+.section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 为不同section设置递进延迟 */
+.section:nth-child(2) { transition-delay: 0.1s; }
+.section:nth-child(3) { transition-delay: 0.2s; }
+.section:nth-child(4) { transition-delay: 0.3s; }
+.section:nth-child(5) { transition-delay: 0.4s; }
 </style>

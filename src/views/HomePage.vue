@@ -1,78 +1,58 @@
 <!--
+ * @Descripttion: 
  * @Author: Sandy
- * @Date: 2024-10-13 06:30:44
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2025-01-09 20:39:50
- * @Description: 
+ * @Date: 2024-12-18 21:33:19
+ * @LastEditTime: 2025-01-12 21:36:57
 -->
-
 <template>
-    <el-container class="layout-container">
-        <el-header > 
-            <BaseHeader/>
-        </el-header>
-        <el-main>
-            <LoadingSpinner v-if="isLoading" />
-            <router-view v-else v-slot="{ Component }">
-                <transition name="fade" mode="out-in">
-                    <component :is="Component" />
-                </transition>
-            </router-view>
-        </el-main>
-        <el-footer >
-            <BaseFooter/>
-        </el-footer>
-    </el-container>
+  <el-container class="layout-container">
+    <el-header>
+      <BaseHeader />
+    </el-header>
+    <el-main>
+      <LoadingSpinner v-if="isLoading" />
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" @data-loaded="handleDataLoaded" />
+        </transition>
+      </router-view>
+    </el-main>
+    <el-footer>
+      <BaseFooter />
+    </el-footer>
+  </el-container>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import BaseHeader from "@/components/BaseHeader.vue";
-import BaseFooter from "@/components/BaseFooter.vue";
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import BaseHeader from '@/components/BaseHeader.vue';
+import BaseFooter from '@/components/BaseFooter.vue';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
 
-const isLoading = ref(false)
-const router = useRouter()
+const isLoading = ref(false);
+const router = useRouter();
 
 // 路由守卫控制加载状态
 router.beforeEach((to, from, next) => {
-  isLoading.value = true
-  next()
-})
+  console.log("加载中");
+  isLoading.value = true;
+  next();
+});
 
-router.afterEach(() => {
-  // 模拟异步加载完成
-  setTimeout(() => {
-    isLoading.value = false
-  }, 500)
-})
+const handleDataLoaded = () => {
+  console.log('Data loaded, hiding spinner'); // 调试日志
+  isLoading.value = false; // 隐藏加载动画
+};
 </script>
 
 <style>
- .el-header{
-    height: 60px; /* 设置固定高度 */
-    border-bottom: 1px solid #dcdfe6;
-    
+.el-header {
+  height: 60px;
+  border-bottom: 1px solid #dcdfe6;
 }
 .el-main{
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 140px); 
     width: 100%;
-}
-/* 定义动画 */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 应用动画到元素 */
-.el-main {
-  animation: fadeInDown 1s ease-out forwards;
 }
 </style>

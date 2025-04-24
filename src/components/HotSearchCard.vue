@@ -2,23 +2,26 @@
   <div class="hot-search-card">
     <div class="left-bg" :style="leftBgStyle">
       <div class="card-image">
-        <img :src="image" alt="热搜图片">
+        <img :src="image" alt="热搜图片" class="hover-scale">
       </div>
     </div>
     <div class="card-content">
       <ul>
-        <li v-for="(item, index) in displayedItems" :key="index" class="item-row">
-          <span
-            :class="`num-${(currentSerialNumber + index) < 3 ? ((currentSerialNumber + index) === 0 ? 'red' : (currentSerialNumber + index) === 1 ? 'orange' : 'yellow') : 'black'}`">
-            {{ currentSerialNumber + index + 1 }}.
+        <li v-for="(item, index) in displayedItems" :key="index" class="item-row hover-effect">
+          <span :class="[
+            'number',
+            `num-${(currentSerialNumber + index) < 3 ? ((currentSerialNumber + index) === 0 ? 'red' : (currentSerialNumber + index) === 1 ? 'orange' : 'yellow') : 'black'}`
+          ]">
+            {{ currentSerialNumber + index + 1 }}
           </span>
           <a href="#" @click.prevent="handleClick(item.url)" class="item-link" :title="item.title">{{ item.title }}</a>
         </li>
       </ul>
     </div>
-    <img src="@/assets/next-page.png" alt="More Button" class="more-button" @click="handleMoreClick" />
+    <div class="more-button-wrapper">
+      <img src="@/assets/next-page.png" alt="More Button" class="more-button hover-rotate" @click="handleMoreClick" />
+    </div>
   </div>
-
 </template>
 
 <script>
@@ -82,94 +85,139 @@ export default {
 .hot-search-card {
   display: flex;
   background-color: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
   width: 100%;
   height: 365px;
-  /* 子组件宽度占满容器 */
-  position: relative;
-  /* 为绝对定位创建参考 */
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.hot-search-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
 
 .left-bg {
   width: 30%;
   height: 100%;
-  border-top-left-radius: 10px;
-  /* 左上角圆角 */
-  border-bottom-left-radius: 10px;
-  /* 左下角圆角 */
+  border-radius: 16px 0 0 16px;
   display: flex;
-  /* 使用弹性布局 */
   justify-content: center;
-  /* 水平居中 */
   align-items: center;
-  /* 垂直居中 */
+  padding: 20px;
 }
 
 .card-image {
-  max-width: 90%;
-  /* 限制图片宽度 */
-  max-height: 90%;
-  /* 限制图片高度 */
-  object-fit: contain;
-  /* 确保图片完整显示 */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.card-image img {
+.hover-scale {
   width: 100%;
-  /* 图片宽度占满.card-image容器 */
   height: auto;
-  /* 高度自适应保持图片比例 */
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
 }
 
 .card-content {
   width: 57%;
-  /* 内容占据子组件宽度的60% */
-  margin: 3%;
+  padding: 24px;
+  overflow: hidden;
 }
 
-.card-content ul li {
+.item-row {
   display: flex;
-  /* 使用flex布局 */
   align-items: center;
-  /* 垂直居中对齐 */
+  padding: 8px 0;
+  transition: all 0.2s ease;
+}
+
+.hover-effect:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+  transform: translateX(4px);
+}
+
+.number {
+  font-weight: bold;
+  min-width: 24px;
+  margin-right: 12px;
+  font-size: 15px;
 }
 
 .item-link {
-  /* 链接宽度占满.card-content容器 */
+  flex: 1;
   display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   text-decoration: none;
-  /* 移除链接的下划线 */
   color: #333;
-  /* 设置链接颜色 */
-  line-height: 2.0;
+  font-size: 14px;
+  transition: color 0.2s ease;
+  position: relative;
 }
 
-.more-button {
-  position: absolute; /* 绝对定位 */
-  top: 10px; /* 距离容器顶部10px */
-  right: 10px; /* 距离容器右侧10px */
-  width: 30px; /* 图片宽度 */
-  height: 30px; /* 图片高度 */
-  cursor: pointer; /* 鼠标变成指针样式 */
-  object-fit: contain; /* 确保图片完整显示 */
-}
-.num-red {
-  color: red;
+.item-link:hover {
+  color: #1890ff;
 }
 
-.num-orange {
-  color: orange;
+.item-link:hover::after {
+  content: attr(title);
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: normal;
+  max-width: 300px;
+  z-index: 1000;
 }
 
-.num-yellow {
-  color: yellow;
+.more-button-wrapper {
+  position: absolute;
+  top: 16px;
+  right: 16px;
 }
 
-.num-black {
-  color: grey;
+.hover-rotate {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hover-rotate:hover {
+  transform: rotate(90deg);
+}
+
+.num-red { color: #ff4d4f; }
+.num-orange { color: #ff7a45; }
+.num-yellow { color: #ffc53d; }
+.num-black { color: #8c8c8c; }
+
+@media screen and (max-width: 768px) {
+  .hot-search-card {
+    height: auto;
+    min-height: 300px;
+  }
+  
+  .card-content {
+    padding: 16px;
+  }
+  
+  .item-row {
+    padding: 6px 0;
+  }
 }
 </style>

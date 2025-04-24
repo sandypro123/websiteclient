@@ -1,14 +1,13 @@
 <template>
   <div class="parent-component">
-    <el-row :gutter="20">
+    <el-row :gutter="30">
       <el-col
         v-for="(card, index) in hotSearchCards"
         :key="index"
         :span="11"
         :offset="1"
       >
-        <div class="child-component">
-          <!-- 使用 v-lazy-load -->
+        <div class="child-component" :class="{ 'fade-in': card.visible }">
           <LazyHotSearchCard
             v-if="card.visible"
             :image="card.image"
@@ -69,6 +68,7 @@ export default {
             };
           });
           this.observeCards();
+          this.handleDataLoaded();
         })
         .catch((error) => {
           console.error('Error fetching top search news:', error);
@@ -96,6 +96,9 @@ export default {
         });
       });
     },
+    handleDataLoaded() {
+      this.$emit('data-loaded'); // 通知父组件数据已加载
+    },
   },
 };
 </script>
@@ -104,10 +107,38 @@ export default {
 .parent-component {
   width: 100%;
   height: 100%;
+  padding: 20px;
+  background-color: #f5f7fa;
 }
 
 .child-component {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.child-component:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media screen and (max-width: 768px) {
+  .parent-component {
+    padding: 10px;
+  }
+  
+  .child-component {
+    margin-bottom: 20px;
+  }
 }
 </style>
